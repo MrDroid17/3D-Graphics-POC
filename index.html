@@ -25,6 +25,15 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+    // add listener
+    window.addEventListener('resize', () =>{
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      renderer.setSize(width, height);
+      camera.aspect = width/height;
+      camera.updateProjectionMatrix();
+    })
+
     // creating the shape
     let geometry = new THREE.SphereGeometry(5, 32, 32);
 
