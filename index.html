@@ -17,6 +17,7 @@
 </head>
 <body>
   <script src="./3js/three.js"></script>
+  <script src="./3js/orbitControls.js"></script>
   <script>
     let scene = new THREE.Scene();
     let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -25,7 +26,7 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    // add listener
+    // add listener to resize
     window.addEventListener('resize', () =>{
       let width = window.innerWidth;
       let height = window.innerHeight;
@@ -33,6 +34,9 @@
       camera.aspect = width/height;
       camera.updateProjectionMatrix();
     })
+
+    // controls
+    control = new THREE.OrbitControls(camera, renderer.domElement )
 
     // creating the shape
     let geometry = new THREE.SphereGeometry(5, 32, 32);
