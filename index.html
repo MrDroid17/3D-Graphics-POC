@@ -16,6 +16,16 @@
   </style>
 </head>
 <body>
+    <h6>Select Box view</h6>
+  	<select name="box_sides" id="box" onchange="selectView(this.options[this.selectedIndex].value)">
+        <option value="">Select View</option>
+        <option value="0">Right</option>
+        <option value="1">Left</option>
+        <option value="2">Top</option>
+        <option value="3">Bottom</option>
+        <option value="4">Front</option>
+        <option value="5">Back</option>
+      </select>
   <script src="./3js/three.js"></script>
   <script src="./3js/orbitControls.js"></script>
   <script src="main.js"></script>

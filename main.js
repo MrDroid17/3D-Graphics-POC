@@ -1,6 +1,6 @@
 {/* <script> */ }
 let scene = new THREE.Scene();
-let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+let camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 let renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -15,6 +15,7 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
 })
 
+
 // controls
 control = new THREE.OrbitControls(camera, renderer.domElement);
 const LENGTH = 10;
@@ -23,7 +24,7 @@ const WIDTH = 8;
 
 // creating the sphere
 // let geometry = new THREE.SphereGeometry(5, 32, 32);
-let geometry = new THREE.CubeGeometry(LENGTH, HEIGHT, WIDTH);
+let geometry = new THREE.BoxGeometry(LENGTH, HEIGHT, WIDTH);
 let cubeMaterial = [
   new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('./asset/fakes_death.jpg'), side: THREE.DoubleSide}), // right side
   // new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide }), // right side
@@ -43,6 +44,63 @@ let material = new THREE.MeshFaceMaterial(cubeMaterial);
 let cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 camera.position.z = 10;
+
+selectView = side_index => {
+  scene.add(cube);
+  console.log('Side index ========>', side_index)
+  console.log('Side index ========>', typeof(side_index));
+  const box_sides = {
+    RIGHT: 0,
+    LEFT: 1,
+    TOP: 2,
+    BOTTOM: 3,
+    FRONT: 4,
+    BACK: 5
+  }
+  // cube.rotation.x = 0;
+  // cube.rotation.y = 0;
+  // cube.rotation.z = 0;
+
+  switch(parseInt(side_index)){
+    case box_sides.RIGHT: 
+    console.log('match===>', side_index);
+    cube.rotation.y = -Math.PI/2;
+    break;
+    case box_sides.LEFT: 
+    console.log('match===>', side_index);
+    cube.rotation.y = Math.PI/2;
+    break;
+    case box_sides.TOP: 
+    console.log('match===>', side_index);
+    cube.rotation.x = Math.PI/2;
+    break;
+    case box_sides.BOTTOM: 
+    console.log('match===>', side_index);
+    cube.rotation.x = -Math.PI/2;
+    break;
+    case box_sides.FRONT: 
+    console.log('match===>', side_index);
+    cube.rotation.x = 0;
+    // cube.rotation.y = Math.PI;
+    cube.rotation.y = 0;
+    cube.rotation.z = 0;
+    break;
+    case box_sides.BACK: 
+    console.log('match===>', side_index);
+    cube.rotation.x = 0;
+    cube.rotation.y = Math.PI;
+    cube.rotation.z = 0;
+    break;
+    default: 
+    cube.rotation.x = 0;
+    cube.rotation.y = 0;
+    cube.rotation.z = 0;
+    break;      
+  }
+
+  console.log('finish')
+
+}
 
 // game logic
 let update = () => {
