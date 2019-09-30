@@ -1,0 +1,19 @@
+.flexify{
+  width: 400px;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.style-flex{
+  width: 200px;
+  height: 30px;
+  margin: 0;
+  padding: 10px;
+}
+
+.style-flex2{
+  width: 200px;
+  height: 30px;
+  margin: 0;
+}

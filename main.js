@@ -35,7 +35,7 @@ let cubeMaterial = [
   new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('./asset/what_is_this.jpg'), side: THREE.DoubleSide }), // back side
 ];
 
-let ambientLight = new THREE.AmbientLight(0x00ff00, 2);
+let ambientLight = new THREE.AmbientLight(0x0000ff, 2);
 scene.add(ambientLight);
 
 // Create a material, image or color texture
