@@ -35,7 +35,7 @@ let cubeMaterial = [
   new THREE.MeshPhongMaterial({ map: new THREE.TextureLoader().load('./asset/rachal_mcadams.jpg'), side: THREE.DoubleSide }), // left side
   new THREE.MeshLambertMaterial({ transparent: true, color: 0xff0000, side: THREE.BackSide }), // top side
   // new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('./asset/samurai_jack.jpg'), side: THREE.DoubleSide }), // top side
-  new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('./asset/shrek.jpg'), side: THREE.DoubleSide }), // bottom side
+  new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('./asset/shrek.jpg'), side: THREE.DoubleSide, shadowSide: THREE.DoubleSide  }), // bottom side
   new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('./asset/used_to_be_cool.jpg'), side: THREE.DoubleSide }), // front side
   new THREE.MeshLambertMaterial({ map: new THREE.TextureLoader().load('./asset/what_is_this.jpg'), side: THREE.DoubleSide }), // back side
 ];
@@ -58,17 +58,69 @@ let cover = new THREE.Mesh(geometry2, material2);
 cover.position.set(0, 1.5, 0);
 scene.add(cover);
 // base.rotation.x = Math.PI/2;
+let x_axis, y_axis, z_axis;
+const open_x_val = 0.7;
+const open_y_val = 4;
+const open_z_val = 0;
+const open_rot_z_val = -Math.PI/6;
 
-openBox = () => {
-  console.log('called')
-  if (!box_status) {
-    cover.position.set(0.7, 4, 0)
-    cover.rotation.z = -Math.PI / 6;
-    box_status = true;
-  } else {
-    cover.position.set(0, 1.5, 0);
-    cover.rotation.z = 0;
-    box_status = false;
+
+const close_x_val = 0;
+const close_y_val = 1.5;
+const close_z_val = 0;
+const close_rot_z_val = 0;
+let rotZ = 0;
+let rotY= close_y_val;
+let rotX = close_x_val;
+
+let intervalObj;
+boxControl = () => {
+  
+    if (!box_status) {
+        box_status = true;
+        intervalObj = setInterval(()=>{    
+          openBox();
+        },50);
+    } else {
+        box_status = false;
+        intervalObj = setInterval(()=>{    
+          closeBox();
+        },50);
+    }
+}
+
+
+// game logic
+// let update = () => {    
+// if(box_status){
+//   openBox()
+// }
+
+// };
+openBox = () =>{
+  rotZ -= 0.01;
+  if(rotZ >= open_rot_z_val){
+    rotY += 0.048;
+    (rotZ >= open_rot_z_val/2) ? rotX += 0.005 : rotX += 0.02;
+    cover.rotation.z = rotZ;
+    cover.position.set(rotX, rotY, 0)
+    console.log('open',rotX, rotY, rotZ);
+    // clearInterval(intervalObj);
+  }
+  
+}
+
+closeBox = () =>{
+
+  rotZ += 0.01;
+  console.log(rotZ)
+  if(rotZ <= 0){
+    rotY -= 0.048;
+    (rotZ >= close_rot_z_val/2) ? rotX -= 0.005 : rotX -= 0.02;  
+    cover.rotation.z = rotZ;
+    cover.position.set(rotX, rotY, 0)
+    console.log(rotX, rotY, rotZ);
+    // clearInterval(intervalObj);
   }
 }
 
@@ -149,15 +201,7 @@ selectView = side_index => {
 // base.position = 10;
 
 
-// game logic
-let update = () => {
-  // cube.rotation.x += 0.01;
-  // cube.rotation.y += 0.005;
-  // if(y< Math.PI/2){
-  //   cube.rotation.y += .05;
-  // }
 
-};
 
 // Draw Scene
 let render = () => {
@@ -167,9 +211,9 @@ let render = () => {
 // run game loop(update, render, repeat)
 let GameLoop = () => {
   requestAnimationFrame(GameLoop);
-  update();
+  
   render();
 }
-
+//update();
 GameLoop()
 // </script>
