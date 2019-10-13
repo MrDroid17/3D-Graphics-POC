@@ -1,38 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>3D-Design</title>
   <style>
-    body{
+    body {
       margin: 0;
     }
-    canvas{
-      width: 100%; 
+
+    canvas {
+      width: 100%;
       height: 100%;
     }
   </style>
   <link rel="stylesheet" href="main.css">
 </head>
+
 <body>
   <div class="flexify">
     <h6 class="style-flex">Select Box view</h6>
-  	<select class="style-flex2" name="box_sides" id="box" onchange="selectView(this.options[this.selectedIndex].value)">
-        <option value="">Select View</option>
-        <option value="0">Right</option>
-        <option value="1">Left</option>
-        <option value="2">Top</option>
-        <option value="3">Bottom</option>
-        <option value="4">Front</option>
-        <option value="5">Back</option>
-      </select>
-      <button style="margin-left: 50px; width: 300px" type="button" onclick="boxControl()">Open/Close Box</button>
+    <select class="style-flex2" name="box_sides" id="box" onchange="selectView(this.options[this.selectedIndex].value)">
+      <option value="">Select View</option>
+      <option value="0">Right</option>
+      <option value="1">Left</option>
+      <option value="2">Top</option>
+      <option value="3">Bottom</option>
+      <option value="4">Front</option>
+      <option value="5">Back</option>
+    </select>
+    <button style="margin-left: 50px; width: 300px" type="button" onclick="boxControl()">Open/Close Box</button>
   </div>
   <script src="./3js/three.js"></script>
   <script src="./3js/orbitControls.js"></script>
-  <script src="main2.js"></script>
-  
+  <script src="main3.js"></script>
+
 </body>
+
 </html>

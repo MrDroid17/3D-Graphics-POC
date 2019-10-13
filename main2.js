@@ -92,6 +92,7 @@ boxControl = () => {
 
   if (!box_status) {
     box_status = true;
+    openRightSide();
     intervalObj = setInterval(() => {
       openBox();
     }, 50);
@@ -101,6 +102,10 @@ boxControl = () => {
       closeBox();
     }, 50);
   }
+}
+
+openRightSide = () => {
+
 }
 
 
@@ -113,16 +118,17 @@ boxControl = () => {
 // };
 openBox = () => {
   if (rotZ >= open_rot_z_val) {
- 
     rotZ -= 0.01;
     rotY += 0.048;
     (rotZ >= open_rot_z_val / 2) ? rotX += 0.005 : rotX += 0.02;
     top_side.rotation.z = rotZ;
     top_side.position.set(rotX, rotY, 0)
     console.log('open', rotX, rotY, rotZ);
-    front_side.rotation.x = - 2.5*rotZ;
-    back_side.rotation.x =  2.5*rotZ;
-    left_side.rotation.z =  - 2.5*rotZ;
+    front_side.rotation.x = - 2.5 * rotZ;
+    front_side.position.y = -1.5;
+    front_side.position.y = 1.5;
+    back_side.rotation.x = 2.5 * rotZ;
+    left_side.rotation.z = - 2.5 * rotZ;
   } else {
     clearInterval(intervalObj);
   }
