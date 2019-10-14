@@ -31,17 +31,18 @@ const THICKNESS = 0.05;
 camera.position.z = 10;
 
 // right side
-let rs_geometry = new THREE.BoxBufferGeometry(THICKNESS, HEIGHT, WIDTH);
-let rs_material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
-let right_side = new THREE.Mesh(rs_geometry, rs_material);
-right_side.position.set(5, 0, 0);
-right_side.rotation.z = - Math.PI / 4;
-scene.add(right_side);
-// var rs_obj = new THREE.Object3D();
-// rs_obj.add(right_side);
-// rs_obj.position.y = -1.5;
-
-
+let rsside = new THREE.Object3D();
+generateRightSide(THICKNESS, HEIGHT, WIDTH, rsside);
+// rsside.rotation.z = - Math.PI / 4;
+// rsside.position.y = -1.5;
+scene.add(rsside);
+// rsside.position.y = 1.5;
+let tsside = new THREE.Object3D();
+generateTopSide(LENGTH, THICKNESS, WIDTH, rsside);
+// rsside.rotation.z = - Math.PI / 4;
+// rsside.position.y = -1.5;
+scene.add(tsside);
+// rsside.position.y = 1.5;
 
 // bottom
 let bt_geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
@@ -50,6 +51,26 @@ let bottom = new THREE.Mesh(bt_geometry, bt_material);
 bottom.position.set(0, -1.5, 0);
 scene.add(bottom);
 
+function generateRightSide(th, ht, wt, rside){
+  let rs_geometry = new THREE.BoxBufferGeometry(th, ht, wt);
+  let rs_material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
+  let right_side = new THREE.Mesh(rs_geometry, rs_material);
+  right_side.position.set(5, 0, 0);
+  right_side.position.set(5, -1.5, 0);
+  // right_side.rotation.z = - Math.PI / 4;
+  // right_side.position.set(5, 1.5, 0);
+  rside.add(right_side);
+  // return right_side;
+}
+
+// top
+function generateTopSide(lt, th, wt, tside){
+let ts_geometry = new THREE.BoxBufferGeometry(lt, th, wt);
+let ts_material = new THREE.MeshBasicMaterial({ color: 0x0000ff, side: THREE.DoubleSide });
+let top_side = new THREE.Mesh(ts_geometry, ts_material);
+top_side.position.set(0, 1.5, 0);
+tside.add(top_side);
+}
 
 // run game loop(update, render, repeat) to animate
 let GameLoop = () => {

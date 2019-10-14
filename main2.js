@@ -125,8 +125,8 @@ openBox = () => {
     top_side.position.set(rotX, rotY, 0)
     console.log('open', rotX, rotY, rotZ);
     front_side.rotation.x = - 2.5 * rotZ;
-    front_side.position.y = -1.5;
-    front_side.position.y = 1.5;
+    // front_side.position.y = -1.5;
+    // front_side.position.y = 1.5;
     back_side.rotation.x = 2.5 * rotZ;
     left_side.rotation.z = - 2.5 * rotZ;
   } else {
