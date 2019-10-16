@@ -34,11 +34,32 @@ camera.position.z = 50;
 
 var loader = new THREE.GLTFLoader();
 loader.load(
-   './3d-asset/testanim03.glb',
-   function ( gltf ) {
-      var scale = 5.6;
- 
+   './3d-asset/testanim05.glb',( gltf ) => {
+     console.log('gltf obj',gltf);
+    let slider = gltf.scene
+    // let hijo = slider.children[ 0 ]
+    // slider.scale.x = slider.scale.y = slider.scale.z = 0.15;
+    slider.castShadow = true;
+    slider.receiveShadow = true;
+    // slider.position.y = -0.5;
+    // slider.mesh = new THREE.MeshBasicMaterial(new THREE.Color( 0x00dfff ));
+    // if(slider.mesh){
+    //   slider.material.emissive = new THREE.Color( 0x00ffff );
+    // }
+      // var scale = 5.6;
+      let light = new THREE.DirectionalLight( 0xffffff );
+      light.position.y = 5;
+      light.position.z = 5;
+      light.position.x = 5;
+      scene.add( light );
       scene.add( gltf.scene )
+      scene.add(gltf.animations)
+      // gltf.animations; // Array<THREE.AnimationClip>
+      // gltf.scene; // THREE.Scene
+      // gltf.scenes; // Array<THREE.Scene>
+      // gltf.cameras; // Array<THREE.Camera>
+      // gltf.asset; // Object
+      // {color: 0xffee00}
    },
 );
 
