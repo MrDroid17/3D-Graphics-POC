@@ -97,16 +97,16 @@ boxControl = () => {
 
 // };
 openBox = () => {
-  if (rotZ >= open_rot_z_val) {
+  // if (rotZ >= open_rot_z_val) {
     rotZ -= 0.01;
-    rotY += 0.048;
-    (rotZ >= open_rot_z_val / 2) ? rotX += 0.005 : rotX += 0.02;
+    // rotY += 0.048;
+    // (rotZ >= open_rot_z_val / 2) ? rotX += 0.005 : rotX += 0.02;
     cover.rotation.z = rotZ;
     cover.position.set(rotX, rotY, 0)
     console.log('open', rotX, rotY, rotZ);
-  } else {
-    clearInterval(intervalObj);
-  }
+  // } else {
+  //   clearInterval(intervalObj);
+  // }
 }
 
 closeBox = () => {

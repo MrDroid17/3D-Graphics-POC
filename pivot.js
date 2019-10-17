@@ -31,14 +31,21 @@ const THICKNESS = 0.05;
 camera.position.z = 10;
 
 // right side
-let rsside = new THREE.Object3D();
-generateRightSide(THICKNESS, HEIGHT, WIDTH, rsside);
+let right_side_box = generateRightSide(THICKNESS, HEIGHT, WIDTH);
+var rside = new THREE.Object3D();
+scene.add(rside)
+rside.add(right_side_box)
+right_side_box.position.y = -1.5;
+right_side_box.position.y = +1.5;
+right_side_box.rotation.z = Math.PI / 4;
+// right_side_box.position.set( 5 , 1.5, 0)
+scene.add(right_side_box);
 // rsside.rotation.z = - Math.PI / 4;
 // rsside.position.y = -1.5;
-scene.add(rsside);
+// scene.add(rsside);
 // rsside.position.y = 1.5;
 let tsside = new THREE.Object3D();
-generateTopSide(LENGTH, THICKNESS, WIDTH, rsside);
+generateTopSide(LENGTH, THICKNESS, WIDTH, tsside);
 // rsside.rotation.z = - Math.PI / 4;
 // rsside.position.y = -1.5;
 scene.add(tsside);
@@ -56,11 +63,11 @@ function generateRightSide(th, ht, wt, rside){
   let rs_material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
   let right_side = new THREE.Mesh(rs_geometry, rs_material);
   right_side.position.set(5, 0, 0);
-  right_side.position.set(5, -1.5, 0);
+  // right_side.position.set(5, -1.5, 0);
   // right_side.rotation.z = - Math.PI / 4;
   // right_side.position.set(5, 1.5, 0);
-  rside.add(right_side);
-  // return right_side;
+  // rside.add(right_side);
+  return right_side;
 }
 
 // top
