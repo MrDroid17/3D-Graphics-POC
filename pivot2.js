@@ -40,19 +40,26 @@ let rs_geometry = new THREE.BoxBufferGeometry(THICKNESS, HEIGHT, WIDTH);
 let rs_material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
 let right_side = new THREE.Mesh(rs_geometry, rs_material);
 var rside = new THREE.Object3D();
-// rside.rotation.z = -Math.PI / 4;
+rside.rotation.z = -Math.PI / 4;
 right_side.position.y = 1.5;
 scene.add(rside);
 rside.add(right_side)
 // right_side.position.x = 5;
-right_side.position.set(5, 0, 0);
+// right_side.position.set(5, 0, 0);
+rside.position.x = 5;
 rside.position.y = -1.5;
 
 
 
 // Draw Scene
 let render = () => {
-  rside.rotation.z -= .03
+  if(rside.rotation.z < -Math.PI/4){
+    rside.rotation.z -= 0.03;
+    console.log(rside.rotation.z);
+  }else if(rside.rotation.z < Math.PI/4){
+    rside.rotation.z += 0.03
+    console.log(rside.rotation.z);
+  }
 // right_side.position.y = 1.5;
 
   renderer.render(scene, camera);
