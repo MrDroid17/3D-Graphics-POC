@@ -26,7 +26,7 @@ const LENGTH = 10;
 const HEIGHT = 2;
 const WIDTH = 8;
 const THICKNESS = 0.05;
-const ROTATION_ANGLE_IN_RADIAN = 0.01;
+const ROTATION_ANGLE_IN_RADIAN = 0.005;
 
 // 3D Objects
 let rside = new THREE.Object3D();   // for righ
