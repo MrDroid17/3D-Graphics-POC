@@ -26,7 +26,7 @@ const LENGTH = 10;
 const HEIGHT = 2;
 const WIDTH = 8;
 const THICKNESS = 0.05;
-const ROTATION_ANGLE_IN_RADIAN = 0.02;
+const ROTATION_ANGLE_IN_RADIAN = 0.01;
 
 // 3D Objects
 let rside = new THREE.Object3D();   // for righ
@@ -115,15 +115,15 @@ function topSide(){
   let top_side = new THREE.Mesh(geometry, material);
   // rside.rotation.z = -Math.PI/2;
   // top_side.position.z = 7;
-  top_side.position.y = 2;
+  top_side.position.y = 0;
   top_side.position.x = -5;
-  top_side.position.z = 4;
+  // top_side.position.z = 4;
   scene.add(tside);
   tside.add(top_side)
   // tside.position.x = 5;
   // tside.position.x = -5;
-  tside.position.y = -1;
-  tside.position.z = -4;
+  tside.position.y = 1;
+  // tside.position.z = -4;
   tside.position.x = 5;
   // tside.position.z = -5;
   }
@@ -132,24 +132,33 @@ function topSide(){
 // Draw Scene
 let render = () => {
 
-  if (lside.rotation.z <= Math.PI / 2 && box_status == false) {
-    rside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+  if (lside.rotation.z < Math.PI / 2 && box_status == false) {
     lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
-    tside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+    if(tside.rotation.z >= -Math.PI/2){
+      tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
+      console.log('****************OPEN******************', tside.rotation.z);
+    }else{
+    // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
+    // tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
+    }
     console.log('****************OPEN******************', box_status);
     if (lside.rotation.z > Math.PI / 2) {
       box_status = true
     }
   }
 
-  if (lside.rotation.z >= 0 && box_status == true) {
-    rside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+  if (lside.rotation.z > 0 && box_status == true) {
+    // rside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
     lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
-    tside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+    if(tside.rotation.z < 0){
+      tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
+    }else{
+      // 
+    }
     console.log('*********************CLOSE****************', box_status);
     if (lside.rotation.z < 0) {
       box_status = false
