@@ -26,42 +26,132 @@ const LENGTH = 10;
 const HEIGHT = 2;
 const WIDTH = 8;
 const THICKNESS = 0.05;
+const ROTATION_ANGLE_IN_RADIAN = 0.02;
 
-// bottom
-let bt_geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
-let bt_material = new THREE.MeshBasicMaterial({ color: 0x0ff0ff, side: THREE.DoubleSide });
-let bottom = new THREE.Mesh(bt_geometry, bt_material);
-bottom.position.set(0, -1, 0);
-scene.add(bottom);
+// 3D Objects
+let rside = new THREE.Object3D();   // for righ
+let lside = new THREE.Object3D();   // for left
+let tside = new THREE.Object3D();   // for top
+let btside = new THREE.Object3D();  // for bottom
+let fside = new THREE.Object3D();   // for front
+let bside = new THREE.Object3D();   // for back
+
 camera.position.z = 10;
 
-// right side
-let rs_geometry = new THREE.BoxBufferGeometry(THICKNESS, HEIGHT, WIDTH);
-let rs_material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
-let right_side = new THREE.Mesh(rs_geometry, rs_material);
-var rside = new THREE.Object3D();
-// rside.rotation.z = -Math.PI/2;
-right_side.position.y = 1;
-scene.add(rside);
-rside.add(right_side)
-rside.position.x = 5;
-rside.position.y = -1;
+
+bottomSide();
+rightSide();
+leftSide();
+frontSide();
+backSide();
+topSide();
+
+function bottomSide() {
+  // bottom
+  let geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
+  let material = new THREE.MeshBasicMaterial({ color: 0x0ff0ff, side: THREE.DoubleSide });
+  let bottom = new THREE.Mesh(geometry, material);
+  bottom.position.set(0, -1, 0);
+  scene.add(bottom);
+}
+
+function rightSide() {
+  // right side
+  let geometry = new THREE.BoxBufferGeometry(THICKNESS, HEIGHT, WIDTH);
+  let material = new THREE.MeshBasicMaterial({ color: 0x0bcdff, side: THREE.DoubleSide });
+  let right_side = new THREE.Mesh(geometry, material);
+
+  // rside.rotation.z = -Math.PI/2;
+  right_side.position.y = 1;
+  scene.add(rside);
+  rside.add(right_side)
+  rside.position.x = 5;
+  rside.position.y = -1;
+}
+
+function leftSide() {
+  // left side
+  let geometry = new THREE.BoxBufferGeometry(THICKNESS, HEIGHT, WIDTH);
+  let material = new THREE.MeshBasicMaterial({ color: 0x0efabf, side: THREE.DoubleSide });
+  let left_side = new THREE.Mesh(geometry, material);
+  // rside.rotation.z = -Math.PI/2;
+  left_side.position.y = 1;
+  scene.add(lside);
+  lside.add(left_side)
+  lside.position.x = -5;
+  lside.position.y = -1;
+}
+
+function frontSide() {
+  // front side
+  let geometry = new THREE.BoxBufferGeometry(LENGTH, HEIGHT, THICKNESS);
+  let material = new THREE.MeshBasicMaterial({ color: 0x0b23ff, side: THREE.DoubleSide });
+  let front_side = new THREE.Mesh(geometry, material);
+  // rside.rotation.z = -Math.PI/2;
+  front_side.position.y = 1;
+  scene.add(fside);
+  fside.add(front_side)
+  fside.position.z = 4;
+  fside.position.y = -1;
+}
+
+function backSide() {
+  // back side
+  let geometry = new THREE.BoxBufferGeometry(LENGTH, HEIGHT, THICKNESS);
+  let material = new THREE.MeshBasicMaterial({ color: 0x0babff, side: THREE.DoubleSide });
+  let back_side = new THREE.Mesh(geometry, material);
+  // rside.rotation.z = -Math.PI/2;
+  back_side.position.y = 1;
+  scene.add(bside);
+  bside.add(back_side)
+  bside.position.z = -4;
+  bside.position.y = -1;
+}
+
+function topSide(){
+  // top side
+  let geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
+  let material = new THREE.MeshBasicMaterial({ color: 0xfffeff, side: THREE.DoubleSide });
+  let top_side = new THREE.Mesh(geometry, material);
+  // rside.rotation.z = -Math.PI/2;
+  // top_side.position.z = 7;
+  top_side.position.y = 2;
+  top_side.position.x = -5;
+  top_side.position.z = 4;
+  scene.add(tside);
+  tside.add(top_side)
+  // tside.position.x = 5;
+  // tside.position.x = -5;
+  tside.position.y = -1;
+  tside.position.z = -4;
+  tside.position.x = 5;
+  // tside.position.z = -5;
+  }
+
 
 // Draw Scene
 let render = () => {
 
-  if (rside.rotation.z >= -Math.PI / 2 && box_status==false) {
-    rside.rotation.z -= 0.02;
-    console.log('****************OPEN******************', rside.rotation.z, box_status);
-    if(rside.rotation.z<-Math.PI / 2) {
+  if (lside.rotation.z <= Math.PI / 2 && box_status == false) {
+    rside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+    lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+    fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
+    bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
+    tside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+    console.log('****************OPEN******************', box_status);
+    if (lside.rotation.z > Math.PI / 2) {
       box_status = true
     }
   }
 
- if (rside.rotation.z <= 0 && box_status==true) {
-    rside.rotation.z += 0.02;
-    console.log('*********************CLOSE****************',rside.rotation.z, box_status);
-    if(rside.rotation.z> 0) {
+  if (lside.rotation.z >= 0 && box_status == true) {
+    rside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+    lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+    fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
+    bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
+    tside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+    console.log('*********************CLOSE****************', box_status);
+    if (lside.rotation.z < 0) {
       box_status = false
     }
   }
