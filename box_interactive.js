@@ -45,22 +45,28 @@ camera.position.z = 15;
 camera.position.y = 4;
 camera.position.x = -2;
 
-let ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
-
-
 
 const loadManager = new THREE.LoadingManager();
-let texture01 = new THREE.TextureLoader(loadManager).load( 'asset/carton_color.jpg' );
-let texture02 = new THREE.TextureLoader(loadManager).load( 'asset/carton_side.jpg' );
+let texture01 = new THREE.TextureLoader().load('asset/carton_color.jpg');
+let texture02 = new THREE.TextureLoader().load('asset/carton_side.jpg');
+let texture03 = new THREE.TextureLoader().load('asset/carton_side02.jpg');
+
+let topMaterial = [
+  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // left side
+  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // top side
+  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // bottom side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // front side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // back side
+];
 
 let leftSideMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // left side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // top side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // bottom side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // front side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // back side
+  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // top side
+  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // bottom side
+  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // front side
+  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // back side
 ];
 let rightSideMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
@@ -70,14 +76,7 @@ let rightSideMaterial = [
   new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // front side
   new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // back side
 ];
-let topMaterial = [
-  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // left side
-  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // top side
-  new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // bottom side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // front side
-  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // back side
-];
+
 let bottomMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // left side
@@ -96,15 +95,32 @@ let frontMaterial = [
 ];
 
 
-loadManager.onLoad = () => {
+let ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
 
-  bottomSide();
-  rightSide();
-  leftSide();
-  frontSide();
-  backSide();
-  topSide();
-};
+// let ambientLight2 = new THREE.AmbientLight(0xffffff, 0.5);
+// ambientLight2.position.x = 16;
+// ambientLight2.position.y = 16;
+// ambientLight2.position.z = 16;
+// scene.add(ambientLight2);
+
+
+// loadManager.onLoad = () => {
+
+//   bottomSide();
+//   rightSide();
+//   leftSide();
+//   frontSide();
+//   backSide();
+//   topSide();
+// };
+
+bottomSide();
+rightSide();
+leftSide();
+frontSide();
+backSide();
+topSide();
 
 
 
@@ -170,7 +186,7 @@ function backSide() {
   bside.position.y = -1;
 }
 
-function topSide(){
+function topSide() {
   // top side
   let geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
   // let material = new THREE.MeshFaceMaterial(cubeMaterial);
@@ -188,7 +204,7 @@ function topSide(){
   // tside.position.z = -4;
   tside.position.x = 5;
   // tside.position.z = -5;
-  }
+}
 
 
 // Draw Scene
@@ -198,12 +214,12 @@ let render = () => {
     lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
-    if(tside.rotation.z >= -Math.PI/2){
-      tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
+    if (tside.rotation.z >= -Math.PI / 2) {
+      tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
       console.log('****************OPEN******************', tside.rotation.z);
-    }else{
-    // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
-    // tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
+    } else {
+      // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
+      // tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
     }
     console.log('****************OPEN******************', box_status);
     if (lside.rotation.z > Math.PI / 2) {
@@ -216,10 +232,10 @@ let render = () => {
     lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
-    if(tside.rotation.z < 0){
+    if (tside.rotation.z < 0) {
       tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
       console.log('*********************CLOSE****************', box_status);
-    }else{
+    } else {
       // 
     }
     console.log('*********************CLOSE****************', box_status);
