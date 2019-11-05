@@ -1,5 +1,6 @@
 {/* <script> */ }
-let box_status = false;
+let box_status;
+let box_state = false;
 let scene = new THREE.Scene();
 let camera = new THREE.PerspectiveCamera(80, window.innerWidth / window.innerHeight, 0.1, 1000);
 scene.background = new THREE.Color('gray');
@@ -20,9 +21,18 @@ window.addEventListener('resize', () => {
 })
 
 // add listener to resize
-// window.addEventListener('dblclick', () => {
-//  alert('yo')
-// })
+window.addEventListener('dblclick', () => {
+  if (box_status == undefined) {
+    box_status = false;
+  }
+  else if (box_state == false) {
+    box_status = false;
+  }
+  else if (box_state == true) {
+    box_status = true;
+  }
+  console.log('************************ Box status **************************', box_status);
+})
 
 
 // controls
@@ -41,8 +51,8 @@ let btside = new THREE.Object3D();  // for bottom
 let fside = new THREE.Object3D();   // for front
 let bside = new THREE.Object3D();   // for back
 
-camera.position.z = 15;
-camera.position.y = 4;
+camera.position.z = 13;
+camera.position.y = 2;
 camera.position.x = -2;
 
 
@@ -98,11 +108,9 @@ let frontMaterial = [
 let ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-// let ambientLight2 = new THREE.AmbientLight(0xffffff, 0.5);
-// ambientLight2.position.x = 16;
-// ambientLight2.position.y = 16;
-// ambientLight2.position.z = 16;
-// scene.add(ambientLight2);
+let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+directionalLight.position.y = 16;
+scene.add(directionalLight);
 
 
 // loadManager.onLoad = () => {
@@ -210,39 +218,45 @@ function topSide() {
 // Draw Scene
 let render = () => {
 
-  if (lside.rotation.z < Math.PI / 2 && box_status == false) {
-    lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
-    fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
-    bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
-    tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
-    if (tside.rotation.z >= -Math.PI / 2) {
-      console.log('****************OPEN******************', tside.rotation.z);
-    } else {
-      // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
-      // tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
-    }
-    console.log('****************OPEN******************', box_status);
-    if (lside.rotation.z > Math.PI / 2) {
-      box_status = true
+  if (box_status == false) {
+    if (lside.rotation.z < Math.PI / 2 && box_state == false) {
+      lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+      fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
+      bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
+      tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
+      if (tside.rotation.z >= -Math.PI / 2) {
+        console.log('****************OPEN******************', tside.rotation.z);
+      } else {
+        // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
+        // tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;  
+      }
+      console.log('****************OPEN******************', box_state);
+      if (lside.rotation.z > Math.PI / 2) {
+        box_state = true
+      }
     }
   }
 
-  if (lside.rotation.z > 0 && box_status == true) {
-    // rside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
-    lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
-    fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
-    bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
-    tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
-    if (tside.rotation.z < 0) {
+  if (box_status == true) {
+
+    if (lside.rotation.z > 0 && box_state == true) {
+      // rside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
+      lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
+      fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
+      bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
+      tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
+      if (tside.rotation.z < 0) {
+        console.log('*********************CLOSE****************', box_state);
+      } else {
+        // 
+      }
       console.log('*********************CLOSE****************', box_status);
-    } else {
-      // 
-    }
-    console.log('*********************CLOSE****************', box_status);
-    if (lside.rotation.z < 0) {
-      box_status = false
+      if (lside.rotation.z < 0) {
+        box_state = false
+      }
     }
   }
+
   renderer.render(scene, camera);
 }
 
