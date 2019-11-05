@@ -49,7 +49,7 @@ camera.position.x = -2;
 const loadManager = new THREE.LoadingManager();
 let texture01 = new THREE.TextureLoader().load('asset/carton_color.jpg');
 let texture02 = new THREE.TextureLoader().load('asset/carton_side.jpg');
-let texture03 = new THREE.TextureLoader().load('asset/carton_side02.jpg');
+let texture03 = new THREE.TextureLoader().load('asset/carton_side02vertical.jpg');
 
 let topMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
@@ -63,10 +63,10 @@ let topMaterial = [
 let leftSideMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // left side
-  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // top side
-  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // bottom side
-  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // front side
-  new THREE.MeshLambertMaterial({ map: texture03, side: THREE.DoubleSide }), // back side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // top side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // bottom side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // front side
+  new THREE.MeshLambertMaterial({ map: texture02, side: THREE.DoubleSide }), // back side
 ];
 let rightSideMaterial = [
   new THREE.MeshLambertMaterial({ map: texture01, side: THREE.DoubleSide }), // right side
@@ -214,8 +214,8 @@ let render = () => {
     lside.rotation.z += ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
+    tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
     if (tside.rotation.z >= -Math.PI / 2) {
-      tside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
       console.log('****************OPEN******************', tside.rotation.z);
     } else {
       // rside.rotation.z -= 2 * ROTATION_ANGLE_IN_RADIAN;
@@ -232,8 +232,8 @@ let render = () => {
     lside.rotation.z -= ROTATION_ANGLE_IN_RADIAN;
     fside.rotation.x -= ROTATION_ANGLE_IN_RADIAN;
     bside.rotation.x += ROTATION_ANGLE_IN_RADIAN;
+    tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
     if (tside.rotation.z < 0) {
-      tside.rotation.z += 2 * ROTATION_ANGLE_IN_RADIAN;
       console.log('*********************CLOSE****************', box_status);
     } else {
       // 
