@@ -131,7 +131,6 @@ backSide();
 topSide();
 
 
-
 function bottomSide() {
   // bottom
   let geometry = new THREE.BoxBufferGeometry(LENGTH, THICKNESS, WIDTH);
